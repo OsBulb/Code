@@ -1,4 +1,4 @@
-# MVC
+# Scaffolding
 
 ## Intro
 
