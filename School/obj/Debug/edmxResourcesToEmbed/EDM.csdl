@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ColegioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Persona_Persona">
+    <Key>
+      <PropertyRef Name="IdPersona" />
+    </Key>
+    <Property Name="IdPersona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RUT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ApellidoPaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ApellidoMaterno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Edad" Type="Int32" />
+    <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+    <Property Name="Sexo" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Name="Direccion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Telefono" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="0" />
+    <Property Name="FK_TipoPersona" Type="Int32" />
+    <Property Name="FK_Seccion" Type="Int32" />
+    <NavigationProperty Name="Persona_TipoPersona" Relationship="Self.FK_Persona_Persona_Persona_TipoPersona" FromRole="Persona_Persona" ToRole="Persona_TipoPersona" />
+  </EntityType>
+  <EntityType Name="Persona_TipoPersona">
+    <Key>
+      <PropertyRef Name="IdTipoPersona" />
+    </Key>
+    <Property Name="IdTipoPersona" Type="Int32" Nullable="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FechaModificacion" Type="DateTime" Precision="0" />
+    <Property Name="FK_Alumno" Type="Int32" />
+    <Property Name="FK_Usuario" Type="Int32" />
+    <Property Name="FK_Empleado" Type="Int32" />
+    <NavigationProperty Name="Persona_Persona" Relationship="Self.FK_Persona_Persona_Persona_TipoPersona" FromRole="Persona_TipoPersona" ToRole="Persona_Persona" />
+  </EntityType>
+  <Association Name="FK_Persona_Persona_Persona_TipoPersona">
+    <End Role="Persona_TipoPersona" Type="Self.Persona_TipoPersona" Multiplicity="0..1" />
+    <End Role="Persona_Persona" Type="Self.Persona_Persona" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Persona_TipoPersona">
+        <PropertyRef Name="IdTipoPersona" />
+      </Principal>
+      <Dependent Role="Persona_Persona">
+        <PropertyRef Name="FK_TipoPersona" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SchoolEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Persona_Persona" EntityType="Self.Persona_Persona" />
+    <EntitySet Name="Persona_TipoPersona" EntityType="Self.Persona_TipoPersona" />
+    <AssociationSet Name="FK_Persona_Persona_Persona_TipoPersona" Association="Self.FK_Persona_Persona_Persona_TipoPersona">
+      <End Role="Persona_TipoPersona" EntitySet="Persona_TipoPersona" />
+      <End Role="Persona_Persona" EntitySet="Persona_Persona" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
